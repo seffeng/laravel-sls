@@ -116,7 +116,7 @@ class SLSLog
             $putLogsRequest  = new PutLogsRequest($this->project, $this->logStore, $this->getTopic(), $this->getSource(), $logItems);
             return $this->client->putLogs($putLogsRequest);
         } catch (\Aliyun\SLS\Exception $e) {
-            Log::channel('daily')->error($e->getMessage());
+            Log::channel('daily')->error($e->getMessage(), $contents);
             return false;
         } catch (\Exception $e) {
             throw $e;
