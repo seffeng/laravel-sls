@@ -13,7 +13,14 @@ $ composer require seffeng/laravel-sls
 # 1、生成配置文件
 $ php artisan vendor:publish --tag="sls"
 
-# 2、修改配置文件 /config/sls.php 或 /.env，建议通过修改 .env 实现配置
+# 2、修改配置文件 /config/sls.php 或在 /.env 文件中添加配置
+SLS_ACCESS_KEY_ID=
+SLS_ACCESS_KEY_SECRET=
+SLS_ENDPOINT=
+SLS_PROJECT=
+SLS_LOG_STORE=
+#SLS_TOPIC=  #可选
+#SLS_SOURCE=  #可选
 
 # 3、修改 /config/logging.php 配置，channels 中增加 sls，以下方式二选一；
     
@@ -52,6 +59,13 @@ $ php artisan vendor:publish --tag="sls"
 $app->register(Seffeng\LaravelSLS\SLSServiceProvider::class);
 
 # 2、参考扩展包内 config/sls.php 在 /.env 文件中添加配置
+SLS_ACCESS_KEY_ID=
+SLS_ACCESS_KEY_SECRET=
+SLS_ENDPOINT=
+SLS_PROJECT=
+SLS_LOG_STORE=
+#SLS_TOPIC=  #可选
+#SLS_SOURCE=  #可选
 
 # 3、使用 Log::info() 方式时需增加配置文件/config/logging.php，channels 中增加 sls,参考文件/vendor/laravel/lumen-framework/config/logging.php，以下方式二选一；
 
