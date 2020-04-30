@@ -100,21 +100,23 @@ SLS_LOG_STORE=
 
 ```
 ├─config
-│      sls.php
+│   sls.php
 ├─src
 │  │  SLSLog.php
 │  │  SLSServiceProvider.php
 │  │  Writer.php
 │  ├─Facades
-│  │      Log.php
-│  │      SLSLog.php
+│  │    SLSLog.php
+│  │    Writer.php
+│  ├─Handler
+│  │    SLSHandler.php
 │  ├─Helpers
-│  │      ArrayHelper.php
+│  │    ArrayHelper.php
 │  └─Logging
-│          SLSContentFormatter.php
-│          SLSFormatter.php
+│       SLSContentFormatter.php
+│       SLSFormatter.php
 └─tests
-        LogTest.php
+    LogTest.php
 ```
 
 ### 示例
