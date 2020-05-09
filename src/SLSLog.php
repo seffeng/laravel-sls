@@ -56,6 +56,12 @@ class SLSLog
 
     /**
      *
+     * @var string
+     */
+    private $errorLogChannel = 'daily';
+
+    /**
+     *
      * @var Client
      */
     private $client;
@@ -75,9 +81,10 @@ class SLSLog
         $this->logStore = Arr::get($config, 'logStore');
         $this->topic = Arr::get($config, 'topic');
         $this->source = Arr::get($config, 'source');
+        $errorLogChannel = Arr::get($config, 'errorlogChannel');
+        $errorLogChannel && $this->errorLogChannel = $errorLogChannel;
 
-        if (is_null($this->endpoint) || is_null($this->accessKeyId) || is_null($this->accessKeySecret) || is_null($this->project) || is_null($this->logStore))
-        {
+        if (is_null($this->endpoint) || is_null($this->accessKeyId) || is_null($this->accessKeySecret) || is_null($this->project) || is_null($this->logStore)) {
             throw new \RuntimeException('Warning: accesskeyid, accesskeysecret, endpoint, project, logStore cannot be empty.');
         }
         $this->client = new Client($this->endpoint, $this->accessKeyId, $this->accessKeySecret);
@@ -116,7 +123,7 @@ class SLSLog
             $putLogsRequest  = new PutLogsRequest($this->project, $this->logStore, $this->getTopic(), $this->getSource(), $logItems);
             return $this->client->putLogs($putLogsRequest);
         } catch (\Aliyun\SLS\Exception $e) {
-            Log::channel('daily')->error($e->getMessage(), $contents);
+            Log::channel($this->errorLogChannel)->error($e->getMessage(), $contents);
             return false;
         } catch (\Exception $e) {
             throw $e;

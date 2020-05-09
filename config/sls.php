@@ -3,6 +3,11 @@
 return [
 
     /**
+     * SLS写人异常时使用该 channel 记录日志
+     */
+    'errorlogChannel' => env('SLS_ERROR_LOG_CHANNEL', 'daily'),
+
+    /**
      * 阿里云 AccessKeyId
      */
     'accessKeyId' => env('SLS_ACCESS_KEY_ID', 'AccessKeyID'),

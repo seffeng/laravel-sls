@@ -21,6 +21,7 @@ SLS_PROJECT=
 SLS_LOG_STORE=
 #SLS_TOPIC=  #可选
 #SLS_SOURCE=  #可选
+#SLS_ERROR_LOG_CHANNEL= #可选[默认-daily]
 
 # 3、修改 /config/logging.php 配置，channels 中增加 sls，以下方式二选一；
     
@@ -66,6 +67,7 @@ SLS_PROJECT=
 SLS_LOG_STORE=
 #SLS_TOPIC=  #可选
 #SLS_SOURCE=  #可选
+#SLS_ERROR_LOG_CHANNEL= #可选[默认-daily]
 
 # 3、使用 Log::info() 方式时需增加配置文件/config/logging.php，channels 中增加 sls,参考文件/vendor/laravel/lumen-framework/config/logging.php，以下方式二选一；
 
@@ -125,6 +127,8 @@ SLS_LOG_STORE=
 # 1、如果控制器直接抛出符合 App\Exceptions\Handler->report() 的异常，则仅需配置logging.php，不需额外代码，该方法默认会写 error 日志；$logger->error($e->getMessage(),...)
 
 # 2、App\Exceptions\Handler 在 /bootstrap/app.php 查看。
+
+# 3、是否同时记录本地日志，可自行通过 /config/logging.php 配置。
 ```
 
 ```php
