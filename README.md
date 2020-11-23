@@ -156,7 +156,8 @@ class SiteController extends Controller
             // 仅写到阿里云日志
             Writer::info('bbbb', ['user' => 'bbb', 'action' => 'cccccccccccc']);
         } else {
-            // 如果不同日志内容需要不同 topic 和 source，请在写日志（ Log::info()|SLSLog::putLogs()|app('sls')->putLogs()...）前执行 setTopic、setSource
+            // 如果不同日志内容需要不同 project、logStore、topic 和 source，请在写日志（ Log::info()|SLSLog::putLogs()|app('sls')->putLogs()...）前执行 setProject、setLogStore、setTopic、setSource
+            // app('sls')->setProject('project-new')->setLogStore('logStore-new');
             // app('sls')->setTopic('topic-new')->setSource('source-new');
 
             // 写到本地同时写到阿里云日志，需配置 logging，同时 LOG_CHANNEL 为 ssl

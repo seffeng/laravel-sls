@@ -120,7 +120,7 @@ class SLSLog
             } else {
                 throw new \RuntimeException('Warning: Content Invalid.');
             }
-            $putLogsRequest  = new PutLogsRequest($this->project, $this->logStore, $this->getTopic(), $this->getSource(), $logItems);
+            $putLogsRequest  = new PutLogsRequest($this->getProject(), $this->getLogStore(), $this->getTopic(), $this->getSource(), $logItems);
             return $this->client->putLogs($putLogsRequest);
         } catch (\Aliyun\SLS\Exception $e) {
             Log::channel($this->errorLogChannel)->error($e->getMessage(), $contents);
@@ -176,5 +176,51 @@ class SLSLog
     public function getSource()
     {
         return $this->source;
+    }
+
+    /**
+     *
+     * @author zxf
+     * @date   2020年11月23日
+     * @return string
+     */
+    public function setProject(string $project)
+    {
+        $this->project = $project;
+        return $this;
+    }
+
+    /**
+     *
+     * @author zxf
+     * @date   2020年11月23日
+     * @return string
+     */
+    public function getProject()
+    {
+        return $this->project;
+    }
+
+    /**
+     *
+     * @author zxf
+     * @date   2020年11月23日
+     * @return string
+     */
+    public function setLogStore(string $logStore)
+    {
+        $this->logStore = $logStore;
+        return $this;
+    }
+
+    /**
+     *
+     * @author zxf
+     * @date   2020年11月23日
+     * @return string
+     */
+    public function getLogStore()
+    {
+        return $this->logStore;
     }
 }
