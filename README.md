@@ -25,7 +25,7 @@ SLS_LOG_STORE=
 
 # 3、修改 /config/logging.php 配置，channels 中增加 sls，以下方式二选一；
     
-## 3.1 修改 /.env 中 LOG_CHANNEL 为 stack，stack.channels 增加 sls
+## 3.1 修改 /.env 中 LOG_CHANNEL 为 stack，stack.channels 增加 sls，建议使用此方式，可配置 store
     'channels' => [
         'stack' => [
             'driver' => 'stack',
@@ -38,9 +38,12 @@ SLS_LOG_STORE=
             'driver' => 'monolog',
             'handler' => Seffeng\LaravelSLS\Handler\SLSHandler::class,
             'level'  => 'debug',
+            'with' => [    // 可选项：当使用多个存储时可配置此参数
+                'store' => 'default'    // 对应 sls.php 配置的 stores 的 key
+            ]
         ],
 
-## 3.2 修改 /.env 中 LOG_CHANNEL 为 ssl
+## 3.2 修改 /.env 中 LOG_CHANNEL 为 sls，不支持配置 store
     'channels' => [
         ......
 
@@ -71,7 +74,7 @@ SLS_LOG_STORE=
 
 # 3、使用 Log::info() 方式时需增加配置文件/config/logging.php，channels 中增加 sls,参考文件/vendor/laravel/lumen-framework/config/logging.php，以下方式二选一；
 
-## 3.1 修改 /.env 中 LOG_CHANNEL 为 stack，stack.channels 增加 sls
+## 3.1 修改 /.env 中 LOG_CHANNEL 为 stack，stack.channels 增加 sls，建议使用此方式，可配置 store
     'channels' => [
         'stack' => [
             'driver' => 'stack',
@@ -83,9 +86,12 @@ SLS_LOG_STORE=
             'driver' => 'monolog',
             'handler' => Seffeng\LaravelSLS\Handler\SLSHandler::class,
             'level'  => 'debug',
+            'with' => [    // 可选项：当使用多个存储时可配置此参数
+                'store' => 'default'    // 对应 sls.php 配置的 stores 的 key
+            ]
         ],
 
-## 3.2 修改 /.env 中 LOG_CHANNEL 为 ssl，
+## 3.2 修改 /.env 中 LOG_CHANNEL 为 sls，不支持配置 store
     'channels' => [
         ......
 
@@ -107,6 +113,8 @@ SLS_LOG_STORE=
 │  │  SLSLog.php
 │  │  SLSServiceProvider.php
 │  │  Writer.php
+|  ├─Exceptions
+│  │  SLSException.php
 │  ├─Facades
 │  │    SLSLog.php
 │  │    Writer.php
@@ -156,11 +164,17 @@ class SiteController extends Controller
             // 仅写到阿里云日志
             Writer::info('bbbb', ['user' => 'bbb', 'action' => 'cccccccccccc']);
         } else {
-            // 如果不同日志内容需要不同 project、logStore、topic 和 source，请在写日志（ Log::info()|SLSLog::putLogs()|app('sls')->putLogs()...）前执行 setProject、setLogStore、setTopic、setSource
+            // 如果不同日志内容需要不同 project、logStore、topic 和 source
+            // 方法一：请在写日志（ Log::info()|SLSLog::putLogs()|app('sls')->putLogs()...）前执行 setProject、setLogStore、setTopic、setSource 或 在 sls.php 配置多个 store
             // app('sls')->setProject('project-new')->setLogStore('logStore-new');
             // app('sls')->setTopic('topic-new')->setSource('source-new');
+            // 配置了多个 store 时：app('sls')->loadConfig('store-new')
 
-            // 写到本地同时写到阿里云日志，需配置 logging，同时 LOG_CHANNEL 为 ssl
+            // 方法二：在 sls.php 配置多个 store；注意 logging.php 配置选择第一种 handler 方式配置 多个 channel ，此时可通过 channel 实现：
+            // Log::channel('sls2')->debug('admin create user.333', ['user' => 'bbb']);
+
+            // 需配置 logging，同时 LOG_CHANNEL 为 sls
+            // tap 方式：写到本地同时写到阿里云日志；handler 方式：写到阿里云日志
             Log::debug('admin create user.333', ['user' => 'bbb', 'action' => 'cccccccccccc']);
         }
     }
@@ -173,6 +187,10 @@ class SiteController extends Controller
 | 依赖                         | 仓库地址                                                 | 备注 |
 | :--------------------------- | :------------------------------------------------------- | :--- |
 | lokielse/aliyun-open-api-sls | https://github.com/AliyunOpenAPI/php-aliyun-open-api-sls | 无   |
+
+### 更新日志
+
+* [CHANGELOG.md](CHANGELOG.md)
 
 ### 备注
 

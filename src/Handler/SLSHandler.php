@@ -1,12 +1,36 @@
 <?php
-
+/**
+ * @link http://github.com/seffeng/
+ * @copyright Copyright (c) 2020 seffeng
+ */
 namespace Seffeng\LaravelSLS\Handler;
 
 use Monolog\Handler\AbstractProcessingHandler;
 use Seffeng\LaravelSLS\Helpers\ArrayHelper;
+use Monolog\Logger;
 
 class SLSHandler extends AbstractProcessingHandler
 {
+    /**
+     *
+     * @var string
+     */
+    protected $store;
+
+    /**
+     *
+     * @author zxf
+     * @date   2020年11月24日
+     * @param string $connection
+     * @param int|string $level
+     * @param bool $bubble
+     */
+    public function __construct(string $store = null, $level = Logger::DEBUG, bool $bubble = true)
+    {
+        parent::__construct($level, $bubble);
+        $this->store = $store;
+    }
+
     /**
      *
      * {@inheritDoc}
@@ -23,6 +47,9 @@ class SLSHandler extends AbstractProcessingHandler
                 'file' => $exception->getFile(),
                 'line' => $exception->getLine(),
             ];
+        }
+        if ($this->store) {
+            app('sls')->loadConfig($this->store);
         }
         $datetime = ArrayHelper::getValue($record, 'datetime');
         app('sls')->putLogs([

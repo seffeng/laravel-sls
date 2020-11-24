@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * @link http://github.com/seffeng/
+ * @copyright Copyright (c) 2020 seffeng
+ */
 namespace Seffeng\LaravelSLS;
 
 use Illuminate\Foundation\Application as LaravelApplication;
@@ -28,7 +31,7 @@ class SLSServiceProvider extends BaseServiceProvider
         });
 
         $config = $this->app['config']['sls'];
-        $this->app->instance('sls.writer', new Writer(app('sls'), $this->app['events'], $config['topic'], $config['env']));
+        $this->app->instance('sls.writer', new Writer(app('sls'), $this->app['events'], $config['env']));
     }
 
     /**

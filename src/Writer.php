@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * @link http://github.com/seffeng/
+ * @copyright Copyright (c) 2020 seffeng
+ */
 namespace Seffeng\LaravelSLS;
 
 use Illuminate\Contracts\Events\Dispatcher;
@@ -22,25 +25,26 @@ class Writer implements LoggerInterface
     private $logger;
 
     /**
-     * @var string
-     */
-    private $topic;
-
-    /**
      *
      * @var string
      */
     private $env;
 
-
-    public function __construct(SLSLog $logger, Dispatcher $dispatcher = null, $topic, string $env = '')
+    /**
+     *
+     * @author zxf
+     * @date   2020年11月24日
+     * @param SLSLog $logger
+     * @param Dispatcher $dispatcher
+     * @param string $env
+     */
+    public function __construct(SLSLog $logger, Dispatcher $dispatcher = null, string $env = '')
     {
         if (isset($dispatcher)) {
             $this->dispatcher = $dispatcher;
         }
 
         $this->logger = $logger;
-        $this->topic  = $topic;
         $this->env  = $env;
     }
 
@@ -219,7 +223,7 @@ class Writer implements LoggerInterface
             'env'     => $this->env,
             'message' => $message,
             'context' => json_encode($context),
-        ], $this->topic);
+        ]);
     }
 
 

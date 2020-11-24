@@ -3,47 +3,62 @@
 return [
 
     /**
+     * APP_ENV
+     */
+    'env' => config('app.env', ''),
+
+    /**
      * SLS写人异常时使用该 channel 记录日志
      */
     'errorlogChannel' => env('SLS_ERROR_LOG_CHANNEL', 'daily'),
 
     /**
-     * 阿里云 AccessKeyId
+     * 默认连接端配置
      */
-    'accessKeyId' => env('SLS_ACCESS_KEY_ID', 'AccessKeyID'),
+    'store' => env('SLS_STORE', 'default'),
 
     /**
-     * 阿里云 AccessKeySecret
+     * 连接配置
      */
-    'accessKeySecret' => env('SLS_ACCESS_KEY_SECRET', 'AccessKeySecret'),
+    'stores' => [
 
-    /**
-     * endpoint
-     */
-    'endpoint' => env('SLS_ENDPOINT', ''),
+        'default' => [
+            /**
+             * 阿里云 AccessKeyId
+             */
+            'accessKeyId' => env('SLS_ACCESS_KEY_ID', 'AccessKeyID'),
 
-    /**
-     *  project
-     */
-    'project' => env('SLS_PROJECT', ''),
+            /**
+             * 阿里云 AccessKeySecret
+             */
+            'accessKeySecret' => env('SLS_ACCESS_KEY_SECRET', 'AccessKeySecret'),
 
-    /**
-     * logStore
-     */
-    'logStore' => env('SLS_LOG_STORE', ''),
+            /**
+             * endpoint
+             */
+            'endpoint' => env('SLS_ENDPOINT', ''),
 
-    /**
-     * topic，非必须
-     */
-    'topic' => env('SLS_TOPIC', ''),
+            /**
+             *  project
+             */
+            'project' => env('SLS_PROJECT', ''),
 
-    /**
-     * source，非必须
-     */
-    'source' => env('SLS_SOURCE', ''),
+            /**
+             * logStore
+             */
+            'logStore' => env('SLS_LOG_STORE', ''),
 
-    /**
-     * APP_ENV
-     */
-    'env' => config('app.env', ''),
+            /**
+             * topic，非必须
+             */
+            'topic' => env('SLS_TOPIC', ''),
+
+            /**
+             * source，非必须
+             */
+            'source' => env('SLS_SOURCE', ''),
+        ],
+
+        // 更多配置
+    ]
 ];
