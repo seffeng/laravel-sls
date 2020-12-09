@@ -161,7 +161,7 @@ class SLSLog
             $this->logStore = Arr::get($customer, 'logStore');
             $this->topic = Arr::get($customer, 'topic');
             $this->source = Arr::get($customer, 'source');
-            $errorLogChannel = Arr::get($customer, 'errorlogChannel');
+            $errorLogChannel = Arr::get(static::$config, 'errorlogChannel');
             $errorLogChannel && $this->errorLogChannel = $errorLogChannel;
 
             if (empty($this->getAccessKeyId()) || empty($this->getAccessKeySecret())) {
