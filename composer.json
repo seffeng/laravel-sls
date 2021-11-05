@@ -22,7 +22,7 @@
         "seffeng/aliyun-sls": ">=0.1"
     },
     "require-dev" : {
-        "phpunit/phpunit" : "^9.1"
+        "phpunit/phpunit" : ">=8.0"
     },
     "autoload" : {
         "psr-4" : {
