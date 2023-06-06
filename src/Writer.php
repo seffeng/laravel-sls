@@ -180,7 +180,7 @@ class Writer implements LoggerInterface
      * Register a daily file log handler.
      *
      * @param  string $path
-     * @param  int    $days
+     * @param  integer    $days
      * @param  string $level
      *
      * @return void
